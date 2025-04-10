@@ -24,9 +24,6 @@ int main(void)
 			1,
 			LOG_LEVEL_INFO);
 
-	// Usando el logger creado previamente
-	// Escribi: "Hola! Soy un log"
-
 	log_info(
 			logger,
 			"Test Log msj!");
@@ -39,10 +36,9 @@ int main(void)
 
 	config = config_create("cliente.config");
 	
-	int key = config_get_int_value(config, "CLAVE");
+	valor = config_get_string_value(config, "CLAVE");
+	
 
-	printf("Llave archivo cliente.config: %d", key);
-	printf("\n");
 
 	logger = log_create(
 		TP0_LOG,
@@ -62,17 +58,20 @@ int main(void)
 		TP0_LOG,
 		"Config Process",
 		1,
-		LOG_LEVEL_TRACE
+		LOG_LEVEL_INFO
 	);
 
-	log_trace(logger,
+	log_info(logger,
 	"Clave Cargada de 'cliente.config'");
+
+	log_info(
+		logger,
+		valor
+	);
+
 
 	log_destroy(logger);
 
-
-	// Usando el config creado previamente, leemos los valores del config y los
-	// dejamos en las variables 'ip', 'puerto' y 'valor'
 
 	// Loggeamos el valor de config
 
@@ -114,14 +113,24 @@ t_config *iniciar_config(void)
 
 void leer_consola(t_log *logger)
 {
-	char *leido;
+	char* linea;
 
-	// La primera te la dejo de yapa
-	leido = readline("> ");
-
-	// El resto, las vamos leyendo y logueando hasta recibir un string vacío
-
-	// ¡No te olvides de liberar las lineas antes de regresar!
+	while(1){
+		linea = readline("Ingrese un mensaje: ");
+		if (strcmp(linea, "exit") == 0) {
+			free(linea);
+			break;
+		}
+		log_create(
+			TP0_LOG,
+			"ConsolaProcess",
+			1,
+			LOG_LEVEL_INFO
+		);
+		log_info(logger, "Mensaje ingresado: %s", linea);
+		log_destroy(logger);
+		free(linea);
+	};
 }
 
 void paquete(int conexion)
