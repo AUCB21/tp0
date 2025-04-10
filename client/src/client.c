@@ -60,7 +60,7 @@ int main(void)
 		1,
 		LOG_LEVEL_INFO
 	);
-
+// Loggeamos el valor de config
 	log_info(logger,
 	"Clave Cargada de 'cliente.config'");
 
@@ -69,11 +69,7 @@ int main(void)
 		valor
 	);
 
-
 	log_destroy(logger);
-
-
-	// Loggeamos el valor de config
 
 	/* ---------------- LEER DE CONSOLA ---------------- */
 
@@ -116,7 +112,7 @@ void leer_consola(t_log *logger)
 	char* linea;
 
 	while(1){
-		linea = readline("Ingrese un mensaje: ");
+		linea = readline("Ingrese un mensaje(exit para salir): ");
 		if (strcmp(linea, "exit") == 0) {
 			free(linea);
 			break;
