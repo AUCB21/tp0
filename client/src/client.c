@@ -109,24 +109,12 @@ t_config *iniciar_config(void)
 
 void leer_consola(t_log *logger)
 {
-	char* linea;
-
-	while(1){
-		linea = readline("Ingrese un mensaje(exit para salir): ");
-		if (strcmp(linea, "exit") == 0) {
-			free(linea);
-			break;
-		}
-		log_create(
-			TP0_LOG,
-			"ConsolaProcess",
-			1,
-			LOG_LEVEL_INFO
-		);
-		log_info(logger, "Mensaje ingresado: %s", linea);
-		log_destroy(logger);
-		free(linea);
+	char* leido;
+	while (strcmp(leido = readline("> "), "")) {
+		log_info(logger, leido);
+		free(leido);
 	};
+	return;
 }
 
 void paquete(int conexion)
